@@ -6,12 +6,6 @@
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  // plugins: [
-  //   "prettier"
-  // ],
-  // rules: {
-  //   "prettier/prettier": "error"
-  // }
   root: true,
   parserOptions: {
     ecmaVersion: "latest",
@@ -28,7 +22,7 @@ module.exports = {
   ignorePatterns: ["!**/.server", "!**/.client"],
 
   // Base config
-  extends: ["eslint:recommended", "prettier"],
+  extends: ["eslint:recommended"],
 
   overrides: [
     // React
@@ -59,7 +53,7 @@ module.exports = {
     // Typescript
     {
       files: ["**/*.{ts,tsx}"],
-      plugins: ["@typescript-eslint", "import"],
+      plugins: ["@typescript-eslint", "import", "drizzle", "prettier"],
       parser: "@typescript-eslint/parser",
       settings: {
         "import/internal-regex": "^~/",
@@ -75,8 +69,26 @@ module.exports = {
       extends: [
         "plugin:@typescript-eslint/recommended",
         "plugin:import/recommended",
-        "plugin:import/typescript"
-      ]
+        "plugin:import/typescript",
+        "plugin:drizzle/recommended", "prettier"
+      ],
+      rules: {
+        "max-len": ["warn", { "code": 120 }],
+        "react/react-in-jsx-scope": "off",
+        "camelcase": "off",
+        "spaced-comment": "warn",
+
+        "quotes": [
+          "warn",
+          "double"
+        ],
+        "no-duplicate-imports": "warn",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
+      }
+
     },
 
     // Node
@@ -86,20 +98,7 @@ module.exports = {
         node: true
       }
     }
-  ],
+  ]
 
-  rules: {
-    "react/react-in-jsx-scope": "off",
-    "camelcase": "off",
-    "spaced-comment": "warn",
-    "quotes": [
-      "warn",
-      "double"
-    ],
-    "no-duplicate-imports": "error",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-unused-vars": "warn",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }
+
 };
