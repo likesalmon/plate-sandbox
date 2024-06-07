@@ -1,15 +1,15 @@
 import { db } from "~/db/db";
-
-type Post = {
-  id: number
-  slug: string;
-  title: string;
-}
+import { posts, Post , InsertPost} from "~/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function getPosts(): Promise<Post[]> {
-  // return [
-  //   { id: 1, slug: "hello-world", title: "Hello, World!" },
-  //   { id: 2, slug: "another-post", title: "Another Post" }
-  // ];
   return db.query.posts.findMany();
+}
+
+export async function getPost(slug: string): Promise<Post[]> {
+  return db.select().from(posts).where(eq(posts.slug, slug)).limit(1);
+}
+
+export async function createPost(post: InsertPost): Promise<Post[]> {
+  return db.insert(posts).values(post).returning();
 }

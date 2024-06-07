@@ -3,7 +3,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration, useRouteError
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css?url";
 import { LinksFunction } from "@remix-run/node";
@@ -15,7 +15,7 @@ export const links: LinksFunction = () => {
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-    <head>
+    <head title="plate-sandbox">
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <Meta />
@@ -30,6 +30,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function ErrorBoundary() {
+  const error = useRouteError();
+  console.error(error);
+  return (
+    <html lang="en">
+    <head>
+      <title>Oh no!</title>
+      <Meta />
+      <Links />
+    </head>
+    <body>
+    {/* add the UI you want your users to see */}
+    <Scripts />
+    </body>
+    </html>
+  );
+}
+
 export default function App() {
-  return <Outlet />;
+  return <div className="max-w-screen-xl m-auto py-12"><Outlet /></div>;
 }

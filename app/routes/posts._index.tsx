@@ -4,7 +4,7 @@ import { getPosts } from "~/models/post.server";
 
 export const loader = async () => {
   return json({
-    posts: await getPosts(),
+    posts: await getPosts()
   });
 };
 
@@ -13,6 +13,9 @@ export default function Posts() {
 
   return (
     <main>
+      <Link to="admin" className="text-blue-600 underline">
+        Admin
+      </Link>
       <h1 className="text-7xl">Posts</h1>
       <ul>
         {posts.map(post => (
